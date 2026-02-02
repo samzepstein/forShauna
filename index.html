@@ -32,6 +32,9 @@
             width: 100%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .character {
@@ -68,6 +71,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
+            order: 0;
         }
 
         .speech-bubble::before {
@@ -194,6 +199,8 @@
             margin-bottom: 30px;
             opacity: 0;
             transform: scale(0.8);
+            width: 100%;
+            order: -2;
         }
 
         .year-header.show {
@@ -212,6 +219,8 @@
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
             margin: 30px 0;
+            width: 100%;
+            order: -1;
         }
 
         .photo-item {
@@ -298,15 +307,15 @@
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
                 
-                // More mechanical typewriter sound - short, clicky
-                oscillator.frequency.value = 1200 + Math.random() * 400;
-                oscillator.type = 'square';
+                // Softer, more pleasant typing sound
+                oscillator.frequency.value = 600 + Math.random() * 100;
+                oscillator.type = 'sine';
                 
-                gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.03);
+                gainNode.gain.setValueAtTime(0.03, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.04);
                 
                 oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.03);
+                oscillator.stop(audioContext.currentTime + 0.04);
             } catch (e) {
                 console.log('Audio playback error:', e);
             }
@@ -354,7 +363,11 @@
             const header = document.createElement('div');
             header.className = 'year-header';
             header.textContent = `YEAR ${year}`;
-            speechTextElement.parentElement.insertBefore(header, speechTextElement.parentElement.firstChild);
+            
+            // Insert at the beginning of container
+            const container = document.querySelector('.container');
+            const character = document.querySelector('.character');
+            container.insertBefore(header, character.nextSibling);
             
             setTimeout(() => {
                 header.classList.add('show');
@@ -381,7 +394,9 @@
                 }, 150 * index);
             });
             
-            speechTextElement.parentElement.insertBefore(gallery, speechTextElement);
+            // Insert before speech bubble
+            const speechBubble = document.querySelector('.speech-bubble');
+            speechBubble.parentElement.insertBefore(gallery, speechBubble);
         }
 
         function clearExtras() {
@@ -434,8 +449,12 @@
                 
                 // Photos from the images folder
                 const placeholderPhotos = [
+                    'images/IMG_1299.HEIC',
+                    'images/IMG_2319.HEIC',
+                    'images/IMG_2749.HEIC',
                     'images/IMG_2753.JPG',
                     'images/IMG_2793.JPG',
+                    'images/IMG_2885.HEIC',
                     'images/IMG_3126.JPG'
                 ];
                 
