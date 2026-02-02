@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Guide</title>
+    <title>Hello.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -229,14 +229,15 @@
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
                 
-                oscillator.frequency.value = 800 + Math.random() * 200;
-                oscillator.type = 'sine';
+                // More mechanical typewriter sound - short, clicky
+                oscillator.frequency.value = 1200 + Math.random() * 400;
+                oscillator.type = 'square';
                 
-                gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+                gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.03);
                 
                 oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.05);
+                oscillator.stop(audioContext.currentTime + 0.03);
             } catch (e) {
                 console.log('Audio playback error:', e);
             }
@@ -254,7 +255,7 @@
                     cursor.before(text.charAt(i));
                     playTypingSound();
                     i++;
-                    setTimeout(type, 50);
+                    setTimeout(type, 60);
                 } else {
                     setTimeout(() => {
                         cursor.remove();
@@ -294,9 +295,31 @@
 
         function step2() {
             buttonContainer.innerHTML = '';
-            typeWriter("Great! More steps coming soon...", () => {
-                // Future steps will go here
-            });
+            setTimeout(() => {
+                typeWriter("You've probably realized now that I am not home. Don't worry. I'm not far away. But I'd like to play a little game with you. Are you in?", () => {
+                    showButtons([
+                        {
+                            text: "Yes",
+                            type: "yes",
+                            action: step3
+                        },
+                        {
+                            text: "No",
+                            type: "no",
+                            action: step3
+                        }
+                    ]);
+                });
+            }, 2000);
+        }
+
+        function step3() {
+            buttonContainer.innerHTML = '';
+            setTimeout(() => {
+                typeWriter("Great! More steps coming soon...", () => {
+                    // Future steps will go here
+                });
+            }, 2000);
         }
 
         // Start the interaction
