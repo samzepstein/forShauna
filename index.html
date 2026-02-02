@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #ffc4d6 0%, #e8b4d9 50%, #d4a5db 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 60px 50px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .character {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .character img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .speech-bubble {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 30px;
+            position: relative;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 15px solid white;
+        }
+
+        .speech-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d2d2d;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 24px;
+            background-color: #2d2d2d;
+            margin-left: 2px;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 49% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 18px 45px;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .btn.show {
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+        }
+
+        .btn-yes:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .btn-no {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-no:hover {
+            background: #d0d0d0;
+            transform: translateY(-2px);
+        }
+
+        .footnote {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+            font-style: italic;
+            opacity: 0;
+        }
+
+        .footnote.show {
+            animation: fadeIn 0.5s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="character">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23E8A87C'/%3E%3Ccircle cx='75' cy='90' r='8' fill='%23000'/%3E%3Ccircle cx='125' cy='90' r='8' fill='%23000'/%3E%3Ccircle cx='100' cy='110' r='4' fill='%23E91E63'/%3E%3Cpath d='M 140 70 Q 150 60 160 70 Q 170 80 160 90 Q 150 100 140 90 Z' fill='%23E91E63'/%3E%3Cpath d='M 165 75 Q 172 68 179 75 Q 186 82 179 89 Q 172 96 165 89 Z' fill='%23C2185B'/%3E%3C/svg%3E" alt="Character">
+        </div>
+        
+        <div class="speech-bubble">
+            <div class="speech-text" id="speechText"></div>
+        </div>
+
+        <div class="button-container" id="buttonContainer"></div>
+        
+        <div class="footnote" id="footnote"></div>
+    </div>
+
+    <script>
+        const speechTextElement = document.getElementById('speechText');
+        const buttonContainer = document.getElementById('buttonContainer');
+        const footnoteElement = document.getElementById('footnote');
+
+        function typeWriter(text, callback) {
+            speechTextElement.innerHTML = '';
+            let i = 0;
+            const cursor = document.createElement('span');
+            cursor.className = 'cursor';
+            speechTextElement.appendChild(cursor);
+
+            function type() {
+                if (i < text.length) {
+                    cursor.before(text.charAt(i));
+                    i++;
+                    setTimeout(type, 50);
+                } else {
+                    setTimeout(() => {
+                        cursor.remove();
+                        if (callback) callback();
+                    }, 300);
+                }
+            }
+            type();
+        }
+
+        function showButtons(buttons) {
+            buttonContainer.innerHTML = '';
+            buttons.forEach((btn, index) => {
+                const button = document.createElement('button');
+                button.className = `btn btn-${btn.type}`;
+                button.textContent = btn.text;
+                button.onclick = btn.action;
+                buttonContainer.appendChild(button);
+                
+                setTimeout(() => {
+                    button.classList.add('show');
+                }, 100 * index);
+            });
+        }
+
+        function step1() {
+            typeWriter("Hey! How are you doing?", () => {
+                showButtons([
+                    {
+                        text: "Good",
+                        type: "yes",
+                        action: step2
+                    }
+                ]);
+            });
+        }
+
+        function step2() {
+            buttonContainer.innerHTML = '';
+            typeWriter("Great! More steps coming soon...", () => {
+                // Future steps will go here
+            });
+        }
+
+        // Start the interaction
+        window.onload = () => {
+            setTimeout(step1, 500);
+        };
+    </script>
+</body>
+</html>
