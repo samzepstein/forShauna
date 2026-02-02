@@ -470,49 +470,60 @@
                 // Runaway logic for "No" buttons
                 if (btn.type === 'no' && btn.runaway) {
                     button.style.position = 'relative';
-                    let offsetX = 0;
-                    let offsetY = 0;
+                    button.style.zIndex = '10';
+                    let currentX = 0;
+                    let currentY = 0;
+                    let isHovering = false;
 
-                    button.addEventListener('mousemove', (e) => {
+                    // Use document mousemove so we can track even after button moves away
+                    function onMouseMove(e) {
+                        if (!isHovering) return;
+
                         const rect = button.getBoundingClientRect();
-                        const centerX = rect.left + rect.width / 2;
-                        const centerY = rect.top + rect.height / 2;
+                        const btnCenterX = rect.left + rect.width / 2;
+                        const btnCenterY = rect.top + rect.height / 2;
 
-                        // Direction away from cursor
-                        const dx = centerX - e.clientX;
-                        const dy = centerY - e.clientY;
-
-                        // Move button away
-                        const force = 80;
+                        // Vector from mouse to button center
+                        const dx = btnCenterX - e.clientX;
+                        const dy = btnCenterY - e.clientY;
                         const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-                        offsetX += (dx / dist) * force;
-                        offsetY += (dy / dist) * force;
 
-                        // Clamp so it stays inside container
+                        // Push away from mouse
+                        const force = 120;
+                        currentX += (dx / dist) * force;
+                        currentY += (dy / dist) * force;
+
+                        // Clamp within container
                         const container = document.querySelector('.container');
                         const cRect = container.getBoundingClientRect();
-                        const btnRect = button.getBoundingClientRect();
+                        const maxX = cRect.width - rect.width - 20;
+                        const maxY = cRect.height - rect.height - 20;
+                        const minX = -(rect.left - cRect.left - 20);
+                        const minY = -(rect.top - cRect.top - 20);
 
-                        const maxLeft = cRect.right - btnRect.width - cRect.left;
-                        const maxTop = cRect.bottom - btnRect.height - cRect.top;
+                        currentX = Math.max(minX, Math.min(currentX, maxX));
+                        currentY = Math.max(minY, Math.min(currentY, maxY));
 
-                        offsetX = Math.max(-btnRect.left + cRect.left + 10, Math.min(offsetX, maxLeft - (btnRect.left - cRect.left) + 10));
-                        offsetY = Math.max(-btnRect.top + cRect.top + 10, Math.min(offsetY, maxTop - (btnRect.top - cRect.top) + 10));
+                        // Override the animation by setting animation to none, then apply transform
+                        button.style.animation = 'none';
+                        button.style.opacity = '1';
+                        button.style.transform = `translate(${currentX}px, ${currentY}px)`;
+                    }
 
-                        button.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+                    button.addEventListener('mouseenter', () => {
+                        isHovering = true;
+                        button.style.transition = 'none';
+                        document.addEventListener('mousemove', onMouseMove);
                     });
 
                     button.addEventListener('mouseleave', () => {
-                        // Smoothly animate back
+                        isHovering = false;
+                        document.removeEventListener('mousemove', onMouseMove);
+                        // Smoothly return
                         button.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
                         button.style.transform = 'translate(0px, 0px)';
-                        setTimeout(() => {
-                            button.style.transition = '';
-                        }, 400);
-                    });
-
-                    button.addEventListener('mouseenter', () => {
-                        button.style.transition = '';
+                        currentX = 0;
+                        currentY = 0;
                     });
                 }
             });
