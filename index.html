@@ -130,21 +130,15 @@
             border-radius: 50px;
             cursor: pointer;
             font-family: 'Nunito', sans-serif;
-            transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             opacity: 0;
             transform: translateY(20px);
         }
 
         .btn.show {
-            animation: slideUp 0.5s ease forwards;
-        }
-
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         .btn-yes {
@@ -467,64 +461,57 @@
                     button.classList.add('show');
                 }, 100 * index);
 
-                // Runaway logic for "No" buttons
-                if (btn.type === 'no' && btn.runaway) {
-                    button.style.position = 'relative';
-                    button.style.zIndex = '10';
-                    let currentX = 0;
-                    let currentY = 0;
-                    let isHovering = false;
+                // Runaway logic
+                if (btn.runaway) {
+                    // Wait for the show transition to finish before attaching runaway
+                    setTimeout(() => {
+                        button.style.position = 'relative';
+                        button.style.zIndex = '10';
 
-                    // Use document mousemove so we can track even after button moves away
-                    function onMouseMove(e) {
-                        if (!isHovering) return;
+                        let moveHandler = (e) => {
+                            const rect = button.getBoundingClientRect();
+                            const btnCX = rect.left + rect.width / 2;
+                            const btnCY = rect.top + rect.height / 2;
 
-                        const rect = button.getBoundingClientRect();
-                        const btnCenterX = rect.left + rect.width / 2;
-                        const btnCenterY = rect.top + rect.height / 2;
+                            const dx = btnCX - e.clientX;
+                            const dy = btnCY - e.clientY;
+                            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
 
-                        // Vector from mouse to button center
-                        const dx = btnCenterX - e.clientX;
-                        const dy = btnCenterY - e.clientY;
-                        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                            // Get current transform
+                            const style = window.getComputedStyle(button);
+                            const matrix = new DOMMatrix(style.transform);
+                            let curX = matrix.m41;
+                            let curY = matrix.m42;
 
-                        // Push away from mouse
-                        const force = 120;
-                        currentX += (dx / dist) * force;
-                        currentY += (dy / dist) * force;
+                            curX += (dx / dist) * 100;
+                            curY += (dy / dist) * 100;
 
-                        // Clamp within container
-                        const container = document.querySelector('.container');
-                        const cRect = container.getBoundingClientRect();
-                        const maxX = cRect.width - rect.width - 20;
-                        const maxY = cRect.height - rect.height - 20;
-                        const minX = -(rect.left - cRect.left - 20);
-                        const minY = -(rect.top - cRect.top - 20);
+                            // Clamp inside container
+                            const cRect = document.querySelector('.container').getBoundingClientRect();
+                            const newLeft = rect.left + (dx / dist) * 100;
+                            const newRight = newLeft + rect.width;
+                            const newTop = rect.top + (dy / dist) * 100;
+                            const newBottom = newTop + rect.height;
 
-                        currentX = Math.max(minX, Math.min(currentX, maxX));
-                        currentY = Math.max(minY, Math.min(currentY, maxY));
+                            if (newLeft < cRect.left + 10) curX = cRect.left + 10 - (rect.left - curX);
+                            if (newRight > cRect.right - 10) curX = cRect.right - 10 - rect.width - (rect.left - curX);
+                            if (newTop < cRect.top + 10) curY = cRect.top + 10 - (rect.top - curY);
+                            if (newBottom > cRect.bottom - 10) curY = cRect.bottom - 10 - rect.height - (rect.top - curY);
 
-                        // Override the animation by setting animation to none, then apply transform
-                        button.style.animation = 'none';
-                        button.style.opacity = '1';
-                        button.style.transform = `translate(${currentX}px, ${currentY}px)`;
-                    }
+                            button.style.transition = 'none';
+                            button.style.transform = `translate(${curX}px, ${curY}px)`;
+                        };
 
-                    button.addEventListener('mouseenter', () => {
-                        isHovering = true;
-                        button.style.transition = 'none';
-                        document.addEventListener('mousemove', onMouseMove);
-                    });
+                        button.addEventListener('mouseenter', () => {
+                            document.addEventListener('mousemove', moveHandler);
+                        });
 
-                    button.addEventListener('mouseleave', () => {
-                        isHovering = false;
-                        document.removeEventListener('mousemove', onMouseMove);
-                        // Smoothly return
-                        button.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                        button.style.transform = 'translate(0px, 0px)';
-                        currentX = 0;
-                        currentY = 0;
-                    });
+                        button.addEventListener('mouseleave', () => {
+                            document.removeEventListener('mousemove', moveHandler);
+                            button.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                            button.style.transform = 'translate(0px, 0px)';
+                        });
+                    }, 600); // wait for show animation
                 }
             });
         }
