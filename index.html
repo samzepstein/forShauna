@@ -39,7 +39,7 @@
 
         .character {
             width: 120px;
-            height: 120px;
+            height: 150px;
             margin: 0 auto 30px;
             position: relative;
             animation: float 3s ease-in-out infinite;
@@ -164,11 +164,12 @@
         .btn-no {
             background: #e0e0e0;
             color: #666;
+            position: relative;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         .btn-no:hover {
             background: #d0d0d0;
-            transform: translateY(-2px);
         }
 
         .footnote {
@@ -268,7 +269,116 @@
 <body>
     <div class="container">
         <div class="character">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Cdefs%3E%3ClinearGradient id='skin' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fdd7ba'/%3E%3Cstop offset='100%25' style='stop-color:%23f0c4a0'/%3E%3C/linearGradient%3E%3ClinearGradient id='hair' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23363636'/%3E%3Cstop offset='100%25' style='stop-color:%231a1a1a'/%3E%3C/linearGradient%3E%3C/defs%3E%3C!-- Neck --%3E%3Cpath d='M 85 165 L 82 200 L 118 200 L 115 165 Z' fill='url(%23skin)'/%3E%3C!-- Shirt --%3E%3Cpath d='M 70 200 L 65 240 Q 65 245 70 245 L 130 245 Q 135 245 135 240 L 130 200 Z' fill='%234a90e2'/%3E%3Cpath d='M 82 200 L 80 230 L 90 230 L 88 200 Z' fill='%233a7bc8'/%3E%3Cpath d='M 118 200 L 120 230 L 110 230 L 112 200 Z' fill='%233a7bc8'/%3E%3Cellipse cx='100' cy='215' rx='8' ry='10' fill='%23ffffff' opacity='0.9'/%3E%3C!-- Shoulders --%3E%3Cellipse cx='70' cy='200' rx='18' ry='12' fill='%234a90e2'/%3E%3Cellipse cx='130' cy='200' rx='18' ry='12' fill='%234a90e2'/%3E%3C!-- Head --%3E%3Cellipse cx='100' cy='100' rx='45' ry='55' fill='url(%23skin)'/%3E%3C!-- Ears --%3E%3Cellipse cx='55' cy='100' rx='8' ry='15' fill='%23f0c4a0'/%3E%3Cellipse cx='145' cy='100' rx='8' ry='15' fill='%23f0c4a0'/%3E%3C!-- Hair - voluminous top --%3E%3Cpath d='M 55 70 Q 52 50 60 38 Q 75 25 90 22 Q 100 20 110 22 Q 125 25 140 38 Q 148 50 145 70 Q 143 80 138 85 L 135 75 Q 130 60 120 50 Q 110 42 100 40 Q 90 42 80 50 Q 70 60 65 75 L 62 85 Q 57 80 55 70 Z' fill='url(%23hair)'/%3E%3C!-- Hair texture --%3E%3Cpath d='M 75 45 Q 85 38 95 37 Q 100 36 105 37 Q 115 38 125 45' stroke='%23000000' stroke-width='1' fill='none' opacity='0.3'/%3E%3Cpath d='M 68 60 Q 75 52 82 50' stroke='%23000000' stroke-width='1' fill='none' opacity='0.2'/%3E%3Cpath d='M 118 50 Q 125 52 132 60' stroke='%23000000' stroke-width='1' fill='none' opacity='0.2'/%3E%3C!-- Eyebrows --%3E%3Cpath d='M 65 85 Q 75 82 85 84' stroke='%232d2d2d' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 115 84 Q 125 82 135 85' stroke='%232d2d2d' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C!-- Eyes --%3E%3Cellipse cx='75' cy='98' rx='10' ry='12' fill='%23ffffff'/%3E%3Cellipse cx='125' cy='98' rx='10' ry='12' fill='%23ffffff'/%3E%3Ccircle cx='75' cy='99' r='7' fill='%234d3829'/%3E%3Ccircle cx='125' cy='99' r='7' fill='%234d3829'/%3E%3Ccircle cx='75' cy='99' r='4' fill='%23000000'/%3E%3Ccircle cx='125' cy='99' r='4' fill='%23000000'/%3E%3Ccircle cx='77' cy='96' r='2.5' fill='%23ffffff'/%3E%3Ccircle cx='127' cy='96' r='2.5' fill='%23ffffff'/%3E%3C!-- Nose --%3E%3Cpath d='M 100 105 L 100 120' stroke='%23d9a882' stroke-width='2' fill='none'/%3E%3Cpath d='M 95 120 Q 97 122 100 122 Q 103 122 105 120' stroke='%23d9a882' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C!-- Smile --%3E%3Cpath d='M 75 135 Q 100 148 125 135' stroke='%23663d2e' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 78 137 Q 100 146 122 137 Q 120 142 100 148 Q 80 142 78 137 Z' fill='%23c85a54'/%3E%3Cpath d='M 82 139 L 118 139 Q 115 142 100 145 Q 85 142 82 139 Z' fill='%23ffffff' opacity='0.8'/%3E%3C/svg%3E" alt="Character">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" width="120" height="150">
+              <defs>
+                <linearGradient id="skinG" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#fad5b5"/>
+                  <stop offset="100%" style="stop-color:#f0c49a"/>
+                </linearGradient>
+                <linearGradient id="shirtG" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#5a9fd4"/>
+                  <stop offset="100%" style="stop-color:#3a7ab5"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Shirt -->
+              <path d="M 60 190 Q 52 200 50 235 L 150 235 Q 148 200 140 190 Q 122 180 100 178 Q 78 180 60 190 Z" fill="url(#shirtG)"/>
+              <!-- Collar -->
+              <path d="M 90 178 L 84 196 L 100 202 L 116 196 L 110 178" fill="#4a8bb8"/>
+
+              <!-- Neck -->
+              <path d="M 89 160 L 87 178 L 113 178 L 111 160 Z" fill="url(#skinG)"/>
+
+              <!-- Ears (behind head) -->
+              <ellipse cx="60" cy="120" rx="8" ry="14" fill="#f0c49a"/>
+              <ellipse cx="140" cy="120" rx="8" ry="14" fill="#f0c49a"/>
+
+              <!-- Head - rounder shape like bitmoji reference -->
+              <ellipse cx="100" cy="118" rx="46" ry="50" fill="url(#skinG)"/>
+
+              <!-- Hair - big voluminous dark curly mass -->
+              <!-- Back/base hair shape - wide and puffy -->
+              <path d="M 52 100 Q 48 70 55 50 Q 65 30 80 22 Q 90 16 100 15 Q 110 16 120 22 Q 135 30 145 50 Q 152 70 148 100 Q 145 80 135 65 Q 122 48 100 45 Q 78 48 65 65 Q 55 80 52 100 Z" fill="#1a1210"/>
+
+              <!-- Hair curls - left side volume -->
+              <circle cx="55" cy="78" r="12" fill="#1e1512"/>
+              <circle cx="50" cy="65" r="10" fill="#1a1210"/>
+              <circle cx="58" cy="55" r="11" fill="#221814"/>
+              <circle cx="68" cy="48" r="9" fill="#1a1210"/>
+
+              <!-- Hair curls - right side volume -->
+              <circle cx="145" cy="78" r="12" fill="#1e1512"/>
+              <circle cx="150" cy="65" r="10" fill="#1a1210"/>
+              <circle cx="142" cy="55" r="11" fill="#221814"/>
+              <circle cx="132" cy="48" r="9" fill="#1a1210"/>
+
+              <!-- Hair curls - top volume (messy, swept up) -->
+              <circle cx="82" cy="38" r="13" fill="#1e1512"/>
+              <circle cx="100" cy="30" r="14" fill="#1a1210"/>
+              <circle cx="118" cy="38" r="13" fill="#1e1512"/>
+              <circle cx="92" cy="25" r="11" fill="#221814"/>
+              <circle cx="108" cy="25" r="11" fill="#221814"/>
+              <circle cx="100" cy="20" r="10" fill="#1a1210"/>
+
+              <!-- Hair highlight strands on top -->
+              <path d="M 88 28 Q 94 22 100 20 Q 106 22 112 28" fill="none" stroke="#2e2420" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+              <path d="M 82 35 Q 90 26 100 23" fill="none" stroke="#2e2420" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+              <path d="M 118 35 Q 110 26 100 23" fill="none" stroke="#2e2420" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+
+              <!-- Hair covers forehead slightly -->
+              <path d="M 65 90 Q 70 75 82 68 Q 90 63 100 62 Q 110 63 118 68 Q 130 75 135 90" fill="#1a1210"/>
+
+              <!-- Eyebrows - thick, natural, slightly arched -->
+              <path d="M 74 97 Q 81 94 89 96" stroke="#1a1210" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+              <path d="M 111 96 Q 119 94 126 97" stroke="#1a1210" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+
+              <!-- Eyes - bigger, friendly bitmoji style with half-lid feel -->
+              <!-- Eye whites -->
+              <ellipse cx="82" cy="112" rx="10" ry="8" fill="white"/>
+              <ellipse cx="118" cy="112" rx="10" ry="8" fill="white"/>
+
+              <!-- Iris - big and dark -->
+              <circle cx="82" cy="113" r="6.5" fill="#2b1f14"/>
+              <circle cx="118" cy="113" r="6.5" fill="#2b1f14"/>
+              <!-- Iris shine ring -->
+              <circle cx="82" cy="113" r="6.5" fill="none" stroke="#4a3828" stroke-width="1"/>
+              <circle cx="118" cy="113" r="6.5" fill="none" stroke="#4a3828" stroke-width="1"/>
+
+              <!-- Pupils -->
+              <circle cx="82" cy="113" r="3.5" fill="#0a0806"/>
+              <circle cx="118" cy="113" r="3.5" fill="#0a0806"/>
+
+              <!-- Eye highlights (two-dot style like bitmoji) -->
+              <circle cx="84" cy="110.5" r="2" fill="white"/>
+              <circle cx="80" cy="114" r="1" fill="white"/>
+              <circle cx="120" cy="110.5" r="2" fill="white"/>
+              <circle cx="116" cy="114" r="1" fill="white"/>
+
+              <!-- Upper eyelid line (gives that bitmoji half-lid look) -->
+              <path d="M 72 108 Q 82 104 92 108" stroke="#1a1210" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+              <path d="M 108 108 Q 118 104 128 108" stroke="#1a1210" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+              <!-- Lower eyelid subtle curve -->
+              <path d="M 73 116 Q 82 119 91 116" stroke="#e0c4a8" stroke-width="0.8" fill="none" opacity="0.7"/>
+              <path d="M 109 116 Q 118 119 127 116" stroke="#e0c4a8" stroke-width="0.8" fill="none" opacity="0.7"/>
+
+              <!-- Nose - small, simple, bitmoji style -->
+              <path d="M 100 118 Q 98 123 97 126" stroke="#ddb896" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/>
+              <path d="M 97 126 Q 100 128 103 126" stroke="#ddb896" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+
+              <!-- Mouth - warm, friendly smile -->
+              <path d="M 86 138 Q 100 147 114 138" stroke="#c07060" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Upper lip -->
+              <path d="M 88 138 Q 94 136 100 137 Q 106 136 112 138 Q 100 140 88 138 Z" fill="#d48a7a" opacity="0.8"/>
+              <!-- Lower lip -->
+              <path d="M 88 138 Q 100 146 112 138 Q 100 144 88 138 Z" fill="#c87868" opacity="0.7"/>
+              <!-- Teeth hint -->
+              <path d="M 90 139 Q 100 142 110 139" fill="white" opacity="0.85"/>
+
+              <!-- Cheek blush - subtle like bitmoji -->
+              <ellipse cx="72" cy="126" rx="8" ry="4" fill="#f5b09a" opacity="0.2"/>
+              <ellipse cx="128" cy="126" rx="8" ry="4" fill="#f5b09a" opacity="0.2"/>
+            </svg>
         </div>
         
         <div class="speech-bubble">
@@ -356,6 +466,55 @@
                 setTimeout(() => {
                     button.classList.add('show');
                 }, 100 * index);
+
+                // Runaway logic for "No" buttons
+                if (btn.type === 'no' && btn.runaway) {
+                    button.style.position = 'relative';
+                    let offsetX = 0;
+                    let offsetY = 0;
+
+                    button.addEventListener('mousemove', (e) => {
+                        const rect = button.getBoundingClientRect();
+                        const centerX = rect.left + rect.width / 2;
+                        const centerY = rect.top + rect.height / 2;
+
+                        // Direction away from cursor
+                        const dx = centerX - e.clientX;
+                        const dy = centerY - e.clientY;
+
+                        // Move button away
+                        const force = 80;
+                        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                        offsetX += (dx / dist) * force;
+                        offsetY += (dy / dist) * force;
+
+                        // Clamp so it stays inside container
+                        const container = document.querySelector('.container');
+                        const cRect = container.getBoundingClientRect();
+                        const btnRect = button.getBoundingClientRect();
+
+                        const maxLeft = cRect.right - btnRect.width - cRect.left;
+                        const maxTop = cRect.bottom - btnRect.height - cRect.top;
+
+                        offsetX = Math.max(-btnRect.left + cRect.left + 10, Math.min(offsetX, maxLeft - (btnRect.left - cRect.left) + 10));
+                        offsetY = Math.max(-btnRect.top + cRect.top + 10, Math.min(offsetY, maxTop - (btnRect.top - cRect.top) + 10));
+
+                        button.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+                    });
+
+                    button.addEventListener('mouseleave', () => {
+                        // Smoothly animate back
+                        button.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        button.style.transform = 'translate(0px, 0px)';
+                        setTimeout(() => {
+                            button.style.transition = '';
+                        }, 400);
+                    });
+
+                    button.addEventListener('mouseenter', () => {
+                        button.style.transition = '';
+                    });
+                }
             });
         }
 
@@ -408,7 +567,7 @@
         }
 
         function step1() {
-            typeWriter("Hey! How are you doing?", () => {
+            typeWriter("Hi Shauna, it's me. Sam. Ham. Ham Sandwich. Gerd. Terb. Farticles. How are you doing?", () => {
                 showButtons([
                     {
                         text: "Good",
@@ -432,6 +591,7 @@
                         {
                             text: "No",
                             type: "no",
+                            runaway: true,
                             action: step3
                         }
                     ]);
@@ -449,12 +609,13 @@
                 
                 // Photos from the images folder
                 const placeholderPhotos = [
+                    'images/IMG_1299.HEIC',
+                    'images/IMG_2319.HEIC',
+                    'images/IMG_2749.HEIC',
                     'images/IMG_2753.JPG',
-                    'images/IMG_2592.PNG',
                     'images/IMG_2793.JPG',
-                    'images/IMG_3126.JPG',
-                    'images/IMG_1259.jpg',
-                    'images/IMG_1217.jpg'
+                    'images/IMG_2885.HEIC',
+                    'images/IMG_3126.JPG'
                 ];
                 
                 setTimeout(() => {
